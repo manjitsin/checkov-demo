@@ -18,7 +18,9 @@ jobs:
           terraform init         
 
       - name: Plan Terraform
-        run: terraform plan -out=tfplan -no-color 
+        run: |
+          cd tf
+          terraform plan -out=tfplan -no-color 
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
