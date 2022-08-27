@@ -35,8 +35,4 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: tf/
-          file: tfplan # optional: provide the path for resource to be scanned. This will override the directory if both are provided.
-          log_level: DEBUG # optional: set log level. Default WARNING
-          config_file: path/this_file
-          baseline: tf/.checkov.baseline # optional: Path to a generated baseline file. Will only report results not in the baseline.
-          container_user: 1000 # optional: Define what UID and
+          framework: terraform
