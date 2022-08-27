@@ -20,7 +20,9 @@ jobs:
       - name: Plan Terraform
         run: |
           cd tf
-          terraform plan -out=tfplan -no-color 
+          terraform plan -out=tfplan -no-color
+          ls
+          tree
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
