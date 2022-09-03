@@ -1,4 +1,8 @@
 on: [push]
+
+env:
+  iac_files: ${{ github.workspace }}/tf
+  
 jobs:
   checkov-job:
     runs-on: ubuntu-latest
@@ -35,5 +39,5 @@ jobs:
         continue-on-error: true
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: ${{ github.workspace }}/tf/
+          directory: ${{ env.iac_files }}
           framework: terraform
