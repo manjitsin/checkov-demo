@@ -13,6 +13,9 @@ pr:
   branches:
     include:
     - main
+  paths:
+    include: 
+      - $(Build.SourcesDirectory)/tf
 
 pool:
   vmImage: ubuntu-latest
@@ -28,8 +31,8 @@ stages:
       - script: echo Hello, world!
         displayName: 'Run a one-line script'
 
-  - stage: Test
-#     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  - stage: Tests
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     jobs:
     - job: Tests
       displayName: 'Validating the ADF Code'
