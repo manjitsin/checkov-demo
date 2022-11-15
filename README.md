@@ -1,3 +1,3 @@
 # checkov-demo
 
-checkovs
+checkovss
