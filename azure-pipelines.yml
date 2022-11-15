@@ -9,7 +9,13 @@ trigger:
     include:
       - main
 
-pr: none
+pr:
+  branches:
+    include:
+    - main
+  paths:
+    include: 
+      - $(Build.SourcesDirectory)
 
 pool:
   vmImage: ubuntu-latest
