@@ -11,16 +11,19 @@ pool:
 
 stages:
   - stage: Validate_ADF_Code
+    
     jobs:
     - job: Build_ADF_Code
+      
       displayName: 'Validating the ADF Code'
       steps:
       - script: echo Hello, world!
         displayName: 'Run a one-line script'
 
-  - stage: Validate_ADF_Code
+  - stage: Test
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     jobs:
-    - job: Build_ADF_Code
+    - job: Tests
       displayName: 'Validating the ADF Code'
       steps:
       - script: echo Hello, world!
