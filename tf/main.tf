@@ -4,7 +4,7 @@
 #   features {}
 # }
 
-# valid for terraform version >= 0.14
+# valid for terraform versions >= 0.14
 provider "azurerm" {
   features {}
 }
