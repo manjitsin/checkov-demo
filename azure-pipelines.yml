@@ -15,7 +15,7 @@ pr:
     - main
   paths:
     include: 
-      - $(Build.SourcesDirectory)/tf
+      - tf/
 
 pool:
   vmImage: ubuntu-latest
