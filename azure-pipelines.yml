@@ -9,7 +9,10 @@ trigger:
     include:
       - main
 
-pr: none
+pr:
+  branches:
+    include:
+    - main
 
 pool:
   vmImage: ubuntu-latest
