@@ -29,7 +29,7 @@ stages:
         displayName: 'Run a one-line script'
 
   - stage: Test
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+#     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     jobs:
     - job: Tests
       displayName: 'Validating the ADF Code'
