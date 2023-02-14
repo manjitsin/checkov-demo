@@ -1,0 +1,59 @@
+# Checkov pipeline.
+# Scans the Terraform code.
+# Skipped Checks.
+# CKV_AZURE_6 - Ensure AKS has an API Server Authorised IP Ranges enabled
+
+
+trigger: none
+
+variables:
+  trivyVersion: 0.36.1
+  imageName: 'nginx'
+  tag: 'latest'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- script: |
+    sudo apt-get install rpm
+    wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
+    sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
+    trivy -v
+  displayName: 'Download and install Trivy'
+
+# - bash: |
+#       trivy image --severity LOW,MEDIUM -o junit-report-low-med.xml $(imageName):$(tag) > $(System.DefaultWorkingDirectory)/CheckovReport.xml           
+#   workingDirectory: $(System.DefaultWorkingDirectory)
+#   displayName: "Run > trivy"
+
+- task: CmdLine@2
+  displayName: "Run trivy scan"
+  inputs:
+    script: |
+        trivy image --severity LOW,MEDIUM --format template --template "@/usr/local/share/trivy/templates/junit.tpl" -o junit-report-low-med.xml $(imageName):$(tag)         
+        trivy image --severity HIGH,CRITICAL --format template --template "@/usr/local/share/trivy/templates/junit.tpl" -o junit-report-high-crit.xml $(imageName):$(tag)
+    workingDirectory: $(System.DefaultWorkingDirectory)
+
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'junit-report-low-med.xml'
+    mergeTestResults: true
+    failTaskOnFailedTests: false
+    testRunTitle: 'Trivy - Low and Medium Vulnerabilities'
+    searchFolder: "$(System.DefaultWorkingDirectory)"
+  condition: 'always()'
+
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'junit-report-high-crit.xml'
+    mergeTestResults: true
+    failTaskOnFailedTests: false
+    testRunTitle: 'Trivy - High and Critical Vulnerabilities'
+    searchFolder: "$(System.DefaultWorkingDirectory)"
+  condition: 'always()'

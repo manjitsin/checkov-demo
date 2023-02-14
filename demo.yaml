@@ -1,0 +1,50 @@
+trigger:
+  batch: false
+  branches:
+    include:
+      - develop #collaboration branch
+      - main
+  paths:
+    include:
+      - .pipelines/adf_deployment_pipeline.yml
+      - data_ops/adf/*
+
+pr:
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    include: 
+      - data_ops/adf
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+variables:
+  - ${{ if eq(variables['build.SourceBranchName'], 'develop') }}:
+      - group: demo
+      
+  - ${{ if eq(variables['build.SourceBranchName'], 'main') }}:
+      - group: demo1
+
+
+
+stages:
+    jobs:
+    - job: Build_Adf_Arm_Templates
+      displayName: 'Generate ADF Artifacts'
+      steps:
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'Install Node.js'
+
+      - task: Bash@3
+        displayName: "Validate packaging"
+        inputs:
+          targetType: 'inline'
+          script: |
+            # run tests
