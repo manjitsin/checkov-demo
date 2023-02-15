@@ -32,6 +32,7 @@ variables:
 
 
 stages:
+  - stage: Validate_ADF_Code
     jobs:
     - job: Build_Adf_Arm_Templates
       displayName: 'Generate ADF Artifacts'
