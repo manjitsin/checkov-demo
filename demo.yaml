@@ -43,7 +43,7 @@ stages:
 
 
       - bash: |
-          az pipelines build list
+           echo $(AccessToken) | az devops login
         displayName: 'Show build list and PRs'
         env:
           AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
