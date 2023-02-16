@@ -23,11 +23,11 @@ pool:
 
 
 variables:
-  - ${{ if eq(variables['build.SourceBranchName'], 'develop') }}:
-      - group: demo
+  # - ${{ if eq(variables['build.SourceBranchName'], 'develop') }}:
+  #     - group: demo
       
-  - ${{ if eq(variables['build.SourceBranchName'], 'main') }}:
-      - group: demo1
+  # - ${{ if eq(variables['build.SourceBranchName'], 'main') }}:
+  - group: demo1
 
 
 
@@ -49,3 +49,6 @@ stages:
           targetType: 'inline'
           script: |
             # run tests
+            az extension add --name azure-devops
+            echo $AZURE_DEVOPS_EXT_PAT | az devops login --organization https://dev.azure.com/manjitsin/
+            az devops configure --defaults organization=https://dev.azure.com/$AZURE_DEVOPS_ORG project=$AZURE_DEVOPS_PROJECT
