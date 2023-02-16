@@ -63,7 +63,7 @@ stages:
       #   env:
       #     AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
 
-      - script: echo $(AccessToken) | az devops login
+      - script: echo $(System.AccessToken) | az devops login
         env:
           AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
       - task: Bash@3
