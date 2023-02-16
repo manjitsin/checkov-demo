@@ -41,23 +41,23 @@ stages:
       - bash: az --version
         displayName: 'Show Azure CLI version'
 
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'drobbins-shg-manjsin (a6ec3340-794a-4552-9c76-a5c37e3d0c2b)'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: 'echo $(System.AccessToken) | az devops login'
+      # - task: AzureCLI@2
+      #   inputs:
+      #     azureSubscription: 'drobbins-shg-manjsin (a6ec3340-794a-4552-9c76-a5c37e3d0c2b)'
+      #     scriptType: 'bash'
+      #     scriptLocation: 'inlineScript'
+      #     inlineScript: 'echo $(System.AccessToken) | az devops login'
 
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'drobbins-shg-manjsin (a6ec3340-794a-4552-9c76-a5c37e3d0c2b)'
-          scriptType: 'pscore'
-          scriptLocation: 'inlineScript'
-          inlineScript: 'echo $(System.AccessToken) | az devops login'
+      # - task: AzureCLI@2
+      #   inputs:
+      #     azureSubscription: 'drobbins-shg-manjsin (a6ec3340-794a-4552-9c76-a5c37e3d0c2b)'
+      #     scriptType: 'pscore'
+      #     scriptLocation: 'inlineScript'
+      #     inlineScript: 'echo $(System.AccessToken) | az devops login'
 
 
       - bash: |
-           echo $(System.AccessToken) | az pipelines create --name 'TrivyScanner' --description 'Pipeline for Trivy Scan' --organization 'https://dev.azure.com/manjitsin' --repository devops-practice --branch dev --repository-type tfsgit --yml-path trivy-scan.yml --skip-first-run true
+           echo $(System.AccessToken) | az pipelines create --name 'TrivyScanner' --description 'Pipeline for Trivy Scan' --organization 'https://dev.azure.com/manjitsin' --project 'devops-practice' --repository devops-practice --branch dev --repository-type tfsgit --yml-path trivy-scan.yml --skip-first-run true
         displayName: 'Show build list and PRs'
         env:
           AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
