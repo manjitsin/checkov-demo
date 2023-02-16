@@ -41,6 +41,20 @@ stages:
       - bash: az --version
         displayName: 'Show Azure CLI version'
 
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'azdo-etl'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'echo $(System.AccessToken) | az devops login'
+
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'drobbins-shg-manjsin (a6ec3340-794a-4552-9c76-a5c37e3d0c2b)'
+          scriptType: 'pscore'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'echo $(System.AccessToken) | az devops login'
+
 
       - bash: |
            echo $(AccessToken) | az devops login
