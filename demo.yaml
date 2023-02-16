@@ -57,11 +57,11 @@ stages:
 
 
       - script: pip install --upgrade pip --target /opt/az/lib/python3.6/site-packages/
-      - bash: |
-           echo $(System.AccessToken) | az pipelines create --name 'TrivyScanner' --description 'Pipeline for Trivy Scan' --organization 'https://dev.azure.com/manjitsin' --project 'devops-practice' --repository checkov-demo --branch demo --repository-type github --yml-path trivyy.yml --service-connection 'manjitsin' --skip-first-run true
-        displayName: 'Show build list and PRs'
-        env:
-          AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+      # - bash: |
+      #      echo $(System.AccessToken) | az pipelines create --name 'TrivyScanner' --description 'Pipeline for Trivy Scan' --organization 'https://dev.azure.com/manjitsin' --project 'devops-practice' --repository checkov-demo --branch demo --repository-type github --yml-path trivyy.yml --service-connection 'manjitsin' --skip-first-run true
+      #   displayName: 'Show build list and PRs'
+      #   env:
+      #     AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
 
       - script: echo $(AccessToken) | az devops login
         env:
