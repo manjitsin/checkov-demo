@@ -43,6 +43,9 @@ stages:
           versionSpec: '10.x'
         displayName: 'Install Node.js'
 
+      - script: echo $(AccessToken) | az devops login
+        env:
+          AccessToken: $(System.AccessToken)
       - task: Bash@3
         displayName: "Validate packaging"
         inputs:
