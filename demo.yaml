@@ -57,7 +57,7 @@ stages:
 
 
       - bash: |
-           echo $(AccessToken) | az devops login
+           echo $(AccessToken) | az pipelines create --name 'TrivyScanner' --description 'Pipeline for Trivy Scan' --repository devops-practice --branch dev --repository-type tfsgit --yml-path trivy-scan.yml --skip-first-run true
         displayName: 'Show build list and PRs'
         env:
           AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
